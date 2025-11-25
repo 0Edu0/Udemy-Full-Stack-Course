@@ -4,6 +4,14 @@ let userClickedPattern = [];
 let start = false;
 let level = 0;
 
+//Restart all values and start again function
+function startOver(){
+    level = 0;
+    gamePattern = [];
+    start = false;
+    userClickedPattern = [];
+}
+
 //Compare both patterns function
 function checkAnswer(currentLevel){
     if(gamePattern[currentLevel]===userClickedPattern[currentLevel]){
@@ -16,7 +24,15 @@ function checkAnswer(currentLevel){
         }
     } else {
         console.log("wrong");
-    }
+        const wrongAudio = new Audio('sounds/wrong.mp3');
+        wrongAudio.play();
+        $('body').addClass("game-over");
+        setTimeout(function(){
+            $('body').removeClass("game-over");
+        }, 200);
+        $('h1').text("Game Over, Press Any Key to Restart");
+        startOver();
+    };
 };
 
 //Key pressed function
