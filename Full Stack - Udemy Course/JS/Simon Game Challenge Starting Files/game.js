@@ -6,8 +6,14 @@ let level = 0;
 
 //Compare both patterns function
 function checkAnswer(currentLevel){
-    if(currentLevel===gamePattern.length-1){
+    if(gamePattern[currentLevel]===userClickedPattern[currentLevel]){
         console.log("success");
+        if(gamePattern.length===userClickedPattern.length){
+            setTimeout(function() {
+                nextSequence();
+                userClickedPattern = [];
+            }, 1000);
+        }
     } else {
         console.log("wrong");
     }
@@ -22,17 +28,15 @@ $(document).keypress(function() {
     };
 });
 
-
-
 //Click function
 $(".btn").click(function() {
     let userChosenColor = $(this).attr("id");
     userClickedPattern.push(userChosenColor);
     playSound(userChosenColor);
     animatePress(userChosenColor);
-    checkAnswer(userClickedPattern-1);
-    console.log(userClickedPattern.length-1);
-    console.log(gamePattern.length-1);
+    checkAnswer(userClickedPattern.length-1 );
+    console.log(userClickedPattern);
+    console.log(gamePattern);
 });
 
 //Sequence function
@@ -42,6 +46,7 @@ function nextSequence() {
     gamePattern.push(randomChosenColor);
     $("#"+randomChosenColor).fadeOut(100).fadeIn(100).fadeOut(100).fadeIn(100);
     playSound(randomChosenColor);
+    $('h1').text("Level"+" "+level);
     level++;
 }
 
