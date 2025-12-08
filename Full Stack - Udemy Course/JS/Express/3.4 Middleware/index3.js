@@ -1,3 +1,4 @@
+//Custom middleware - Shows the request method & URL
 import express from "express";
 
 const app = express();
