@@ -30,7 +30,21 @@ app.get("/noAuth", async (req, res) => {
   //Hint: make sure you use JSON.stringify to turn the JS object from axios into a string.
 });
 
-app.get("/basicAuth", (req, res) => {
+app.get("/basicAuth", async (req, res) => {
+  try {
+    const response = await axios.get("https://secrets-api.appbrewery.com/all?page=2", {
+      auth: {
+        username: yourUsername,
+        password: yourPassword
+      },
+    });
+    const result = JSON.stringify(response.data);
+    res.render("index.ejs", { content: result });
+  } catch (error) {
+    console.error("Failed to make request: ", error.message);
+    res.status(404).send(error.message);
+  }
+
   //TODO 3: Write your code here to hit up the /all endpoint
   //Specify that you only want the secrets from page 2
   //HINT: This is how you can use axios to do basic auth:
